@@ -25,6 +25,8 @@ dotnet run -c Release
 3. Toplam iki örnekle **Modeli eğit** etkinleşir. İki farklı etiket sınıflandırma, tek etiket altında iki kare ise tek kişi eşleşme denemesi sağlar. Her sınıf için farklı açı ve aydınlatmada en az üç kare önerilir.
 4. Yeni bir fotoğraf veya karede tahmin edilen etiketi okuyun. LBPH **uzaklığı** düştükçe eşleşme artar. Eşiği aşan tahmin **Bilinmiyor** olarak gösterilir.
 
+Örnek kitaplığında geçerli mod belirtilir. Algılama, tek kişinin örnekleriyle eşleşme ve birden fazla etiketle tanıma farklı durumlardır. Sonuç satırında ilk üç tespit için etiket ve varsa uzaklık bulunur.
+
 Yüz örnekleri `%LOCALAPPDATA%\YMH219-FaceRecognition\training` altında saklanır. Kamera video kaydı yapılmaz. Kullanıcının izni olan örnekleri yerel tutun. Eğitilen model oturum belleğindedir ve uygulama yeniden açıldığında yerel örneklerle tekrar eğitilebilir.
 
 ## Teknoloji ve sınıflar
