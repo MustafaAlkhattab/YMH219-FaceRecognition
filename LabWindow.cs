@@ -24,6 +24,7 @@ internal sealed class LabWindow : Form
     private readonly Label state = Ui.Label("Başlatılıyor", 10, true);
     private readonly Label prediction = Ui.Label("Henüz sonuç yok", 12, true);
     private readonly Label guidance = Ui.Label("", 10, false, Ui.Muted);
+    private readonly Label mode = Ui.Label("Algılama · Eğitim yok", 11, true, Ui.Accent);
     private readonly ListBox samples = new() { Dock = DockStyle.Fill, IntegralHeight = false, BorderStyle = BorderStyle.None, Margin = new(0, 6, 0, 8) };
     private readonly System.Windows.Forms.Timer frames = new() { Interval = 125 };
     private FaceLab? lab;
@@ -56,6 +57,7 @@ internal sealed class LabWindow : Form
         prediction.Margin = new(0, 10, 0, 0);
         var training = Ui.Stack(16,
             (Ui.Label("Örnek kitaplığı", 17, true), 0),
+            (mode, 0),
             (Ui.Label("Aynı kişi için aynı etiketi kullanın.", 10, false, Ui.Muted), 0),
             (Ui.Bar(label, add), 0),
             (samples, 100),
@@ -95,6 +97,7 @@ internal sealed class LabWindow : Form
             var classes = lab!.ReadClasses();
             lab.Train(classes);
             if (current is not null) Render();
+            mode.Text = classes.Length == 1 ? "Eşleşme · 1 etiket" : $"Tanıma · {classes.Length} etiket";
             guidance.Text = classes.Length == 1
                 ? "Tek kişi modeli hazır. Eşik üstündeki yüzler Bilinmiyor olarak gösterilir."
                 : $"{classes.Length} etiket ile tanıma etkin.";
@@ -145,6 +148,7 @@ internal sealed class LabWindow : Form
         label.Items.AddRange(classes.Select(group => group.Label).Cast<object>().ToArray());
         label.Text = previous;
         int total = classes.Sum(group => group.Paths.Length);
+        if (!lab.Trained) mode.Text = "Algılama · Eğitim yok";
         guidance.Text = total < 2
             ? $"{total}/2 örnek. Bir örnek daha ekleyin. Tek kişiyi denemek için aynı etiketi seçin."
             : $"{classes.Length} etiket · {total} örnek. {FaceLab.RecommendedSamples}+ farklı kare / etiket önerilir.";
@@ -164,6 +168,7 @@ internal sealed class LabWindow : Form
             [Path.Combine(DemoDirectory, $"{name}-1.jpg"), Path.Combine(DemoDirectory, $"{name}-2.jpg")])).ToArray();
         lab!.Train(classes, portraits: true);
         demoActive = true;
+        mode.Text = "Demo · 2 kurgu etiketi";
         samples.Items.Clear();
         samples.Items.AddRange(classes.Select(group => new SampleRow(group)).Cast<object>().ToArray());
         guidance.Text = "Her etiket iki sentetik portreyle eğitildi. Üçüncü portre tahmin için ayrı tutuldu.";
@@ -307,7 +312,8 @@ internal sealed class LabWindow : Form
         old?.Dispose();
         prediction.Text = results.Length == 0 ? "Yüz bulunamadı"
             : !lab.Trained ? $"{results.Length} yüz  ·  Algılama"
-            : $"{results.Length} yüz  ·  {string.Join(", ", results.Select(result => result.Label).Distinct())}";
+            : string.Join("  |  ", results.Take(3).Select(result => $"{result.Label} · {result.Distance:F1}"))
+              + (results.Length > 3 ? $"  +{results.Length - 3}" : "");
     }
 
     private void ClearFrame()

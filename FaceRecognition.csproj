@@ -5,6 +5,7 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>branding\App.ico</ApplicationIcon>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -16,5 +17,8 @@
   <ItemGroup>
     <None Update="models\**\*" CopyToOutputDirectory="PreserveNewest" />
     <None Update="demo\*.jpg" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="branding\App.ico" LogicalName="WindowIcon.ico" />
   </ItemGroup>
 </Project>
