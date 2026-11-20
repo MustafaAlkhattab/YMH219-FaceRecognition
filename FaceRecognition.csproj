@@ -15,5 +15,6 @@
 
   <ItemGroup>
     <None Update="models\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="demo\*.jpg" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
