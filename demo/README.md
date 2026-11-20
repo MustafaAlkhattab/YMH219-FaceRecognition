@@ -1,0 +1,7 @@
+# Hazır demo portreleri
+
+Altı portre OpenAI'nin yerleşik ImageGen aracıyla üretilmiştir. Atlas ve Poyraz iki kurgusal etikettir. Her etiket için 1 ve 2 numaralı resimler eğitim, 3 numaralı resim ayrı test girdisidir. Bunlar gerçek doğruluk ölçümü için bir veri kümesi değildir.
+
+## Üretim istemi
+
+> Photo-based diagnostic dataset for a classroom face detector. Generate a precise 3-column by 2-row contact sheet of SIX separate square front-facing headshot photos, edge to edge, no gutters, no text, cropped individually later. All subjects must be fictional adults, with no reference images. The TOP ROW depicts the SAME older fictional woman in three different photos: round face, short wavy silver hair and blue sweater; subtle distinct lighting and expression (neutral, small smile, slight left turn while facing camera). The BOTTOM ROW depicts the SAME middle-aged fictional man in three different photos: angular face, dark closely cropped hair, trimmed dark beard and rust-colored shirt; three subtly different lighting and expressions (neutral, small smile, slight right turn while facing camera). Head fully visible and centered in every tile; all six eyes and noses frontally visible, ample neutral taupe studio wall margins, from top hair to shoulders. Photorealistic, softly and evenly lit, each face occupies 55–63% of each tile's width. Grid precisely aligned and consistent, no captions or borders. Output wide 3:2 overall.
